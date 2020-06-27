@@ -75,8 +75,11 @@ seoul
 
 #### Example 4
 
-##### Change color palette & center number on polygons text color & change background map
+##### Change color palette & center number on polygons text color, format & change background map
 
-    valuemap(seoul, map=leaflet::providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
+    valuemap(
+      seoul, map=providers$Stamen.Toner, palette='YlOrRd',
+      text.color='blue', text.format=function(x) paste(x,'EA')
+    )
 
 ![](example_4.PNG)

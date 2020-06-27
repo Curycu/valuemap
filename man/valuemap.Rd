@@ -10,11 +10,12 @@ valuemap(
   legend.cut = NULL,
   palette = "Blues",
   show.text = TRUE,
-  text.color = "black"
+  text.color = "black",
+  text.format = function(x) x
 )
 }
 \arguments{
-\item{data}{A sf object with polygons who has "name" & "value" columns. "value" column must be numeric type.}
+\item{data}{A sf object with polygons who has "name" & "value" columns ("value" column must be numeric type)}
 
 \item{map}{A map name of leaflet::providers}
 
@@ -25,6 +26,8 @@ valuemap(
 \item{show.text}{A boolean who determines showing "value" number on center of polygons}
 
 \item{text.color}{A color name for "value" number text on center of polygons}
+
+\item{text.format}{A format function for "value" number text on center of polygons}
 }
 \value{
 An Leaflet object.
@@ -49,6 +52,10 @@ if (interactive()) valuemap(seoul, legend.cut=c(20))
 # Visualize without center number on polygons
 if (interactive()) valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
 
-# Change color palette & center number on polygons text color & change background map
-if (interactive()) valuemap(seoul, map=providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
+# Change color palette & center number on polygons text color, format & change background map
+if (interactive())
+  valuemap(
+    seoul, map=providers$Stamen.Toner, palette='YlOrRd',
+    text.color='blue', text.format=function(x) paste(x,'EA')
+  )
 }

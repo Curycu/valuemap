@@ -8,12 +8,13 @@
 #'   color palette for color legend (= palette)
 #'   showing "value" number on center of polygons (= show.text)
 #'   color for "value" number text on center of polygons (= text.color)
-#' @param data A sf object with polygons who has "name" & "value" columns. "value" column must be numeric type.
+#' @param data A sf object with polygons who has "name" & "value" columns ("value" column must be numeric type)
 #' @param map A map name of leaflet::providers
 #' @param legend.cut A numeric vector which means color legend boundary values
 #' @param palette A color name of RColorBrewer palettes
 #' @param show.text A boolean who determines showing "value" number on center of polygons
 #' @param text.color A color name for "value" number text on center of polygons
+#' @param text.format A format function for "value" number text on center of polygons
 #' @return
 #' An Leaflet object.
 #' @export
@@ -28,17 +29,22 @@
 #' # Visualize without center number on polygons
 #' if (interactive()) valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
 #'
-#' # Change color palette & center number on polygons text color & change background map
-#' if (interactive()) valuemap(seoul, map=providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
+#' # Change color palette & center number on polygons text color, format & change background map
+#' if (interactive())
+#'   valuemap(
+#'     seoul, map=providers$Stamen.Toner, palette='YlOrRd',
+#'     text.color='blue', text.format=function(x) paste(x,'EA')
+#'   )
 valuemap <- function(data,
                      map=providers$OpenStreetMap,
                      legend.cut=NULL,
                      palette='Blues',
                      show.text=TRUE,
-                     text.color='black'){
+                     text.color='black',
+                     text.format=function(x) x){
 
   # label & highlight setting
-  popup.labels <- sprintf('<strong>%s</strong><br/>value: %g', data$name, data$value) %>% lapply(htmltools::HTML)
+  popup.labels <- sprintf('<strong>%s</strong><br/>value: %s', data$name, text.format(data$value)) %>% lapply(htmltools::HTML)
   popup.label.options <- labelOptions(style=list(padding='3px 8px'), textsize='15px')
   highlight.options <- highlightOptions(weight=5, color='white', dashArray='', fillOpacity=.7, bringToFront=TRUE)
 
@@ -52,7 +58,7 @@ valuemap <- function(data,
   # plot detail
   if(show.text){
     centers <- suppressWarnings(st_centroid(data))
-    labels <- sprintf('<strong>%g</strong>', data$value) %>% lapply(htmltools::HTML)
+    labels <- sprintf('<strong>%s</strong>', text.format(data$value)) %>% lapply(htmltools::HTML)
     label.options <- labelOptions(noHide=TRUE, direction='center', textOnly=TRUE, textsize='12px', style=list(color=text.color))
 
     base.map %>%
