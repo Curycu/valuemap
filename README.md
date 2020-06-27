@@ -5,7 +5,7 @@ valuemap
 
 <!-- badges: start -->
 <!-- badges: end -->
-The goal of valuemap is to save data analysts' efforts & time with pre-setting sf polygon visualization.
+The goal of valuemap is to save data analysts' efforts & time with pre-set sf polygon visualization.
 
 Installation
 ------------
