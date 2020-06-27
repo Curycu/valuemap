@@ -41,5 +41,14 @@ You have options :
 }
 \examples{
 # Only run this example in interactive R sessions
-valuemap(seoul)
+if (interactive()) valuemap(seoul)
+
+# Emphasize great of equal to 20 polygons
+if (interactive()) valuemap(seoul, legend.cut=c(20))
+
+# Visualize without center number on polygons
+if (interactive()) valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
+
+# Change color palette & center number on polygons text color & change background map
+if (interactive()) valuemap(seoul, map=providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
 }

@@ -5,7 +5,7 @@ valuemap
 
 <!-- badges: start -->
 <!-- badges: end -->
-The goal of valuemap is to save data analysts' efforts & time with pre-setting visualize options.
+The goal of valuemap is to save data analysts' efforts & time with pre-setting sf polygon visualization.
 
 Installation
 ------------
@@ -22,7 +22,7 @@ How to Use?
 
 **Your sf data must have two columns named as `name` & `value`**
 - `name` column is used for mouse over popup information
-- `value` column is used for color polygons & mouse over popup information & display center number of polygons
+- `value` column is used for mouse over popup information & color polygons & display center number of polygons
 
 ``` r
 library(valuemap)
@@ -47,33 +47,21 @@ seoul
 #>  9 1130     13 ((127.022 37.61229, 127.0207 37.6125, 127.0206 37.61252, 127.020~
 #> 10 1132     14 ((127.0464 37.63916, 127.0455 37.63783, 127.0453 37.63749, 127.0~
 #> # ... with 15 more rows
-
-# Example 1
-# Quick & easy visualization of sf polygons with value
-# valuemap(seoul)
-
-# Example 2
-# Emphasize greater or equal to 20 polygons
-# valuemap(seoul, legend.cut=c(20))
-
-# Example 3
-# Visualize without center number on polygons
-# valuemap(seoul, show.text=FALSE)
-
-# Example 4
-# Change color palette & center number on polygons text color & change background map
-# valuemap(seoul, map=leaflet::providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
 ```
 
 #### Example 1
 
 ##### Quick & easy visualization of sf polygons with value
 
+    valuemap(seoul)
+
 ![](example_1.PNG)
 
 #### Example 2
 
-##### Emphasize greater or equal to 20 polygons
+##### Emphasize greater or equal to 20 polygons (&gt;= 20, &lt; 20 : two level only)
+
+    valuemap(seoul, legend.cut=c(20))
 
 ![](example_2.PNG)
 
@@ -81,10 +69,14 @@ seoul
 
 ##### Visualize without center number on polygons
 
+    valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
+
 ![](example_3.PNG)
 
 #### Example 4
 
 ##### Change color palette & center number on polygons text color & change background map
+
+    valuemap(seoul, map=leaflet::providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
 
 ![](example_4.PNG)

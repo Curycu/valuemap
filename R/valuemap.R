@@ -22,15 +22,14 @@
 #' # Only run this example in interactive R sessions
 #' if (interactive()) valuemap(seoul)
 #'
-#' # Visualize without center number on polygons
-#' if (interactive()) valuemap(seoul, show.text=FALSE)
-#'
 #' # Emphasize great of equal to 20 polygons
 #' if (interactive()) valuemap(seoul, legend.cut=c(20))
 #'
+#' # Visualize without center number on polygons
+#' if (interactive()) valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
+#'
 #' # Change color palette & center number on polygons text color & change background map
 #' if (interactive()) valuemap(seoul, map=providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
-#'
 valuemap <- function(data,
                      map=providers$OpenStreetMap,
                      legend.cut=NULL,

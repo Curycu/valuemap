@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of valuemap is to save data analysts' efforts & time with pre-setting visualize options.
+The goal of valuemap is to save data analysts' efforts & time with pre-setting sf polygon visualization.
 
 ## Installation
 
@@ -32,43 +32,39 @@ devtools::install_github("Curycu/valuemap")
 
 **Your sf data must have two columns named as `name` & `value`**  
   - `name` column is used for mouse over popup information  
-  - `value` column is used for color polygons & mouse over popup information & display center number of polygons  
+  - `value` column is used for mouse over popup information & color polygons & display center number of polygons  
   
 ```{r}
 library(valuemap)
 
 seoul
-
-# Example 1
-# Quick & easy visualization of sf polygons with value
-# valuemap(seoul)
-
-# Example 2
-# Emphasize greater or equal to 20 polygons
-# valuemap(seoul, legend.cut=c(20))
-
-# Example 3
-# Visualize without center number on polygons
-# valuemap(seoul, show.text=FALSE)
-
-# Example 4
-# Change color palette & center number on polygons text color & change background map
-# valuemap(seoul, map=leaflet::providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
 ```
 
 #### Example 1
 ##### Quick & easy visualization of sf polygons with value  
+```
+valuemap(seoul)
+```
 ![](example_1.PNG)
 
 #### Example 2
-#####  Emphasize greater or equal to 20 polygons  
+##### Emphasize greater or equal to 20 polygons (>= 20, < 20 : two level only)  
+```
+valuemap(seoul, legend.cut=c(20))
+```
 ![](example_2.PNG)
 
 #### Example 3
-#####  Visualize without center number on polygons  
+##### Visualize without center number on polygons  
+```
+valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
+```
 ![](example_3.PNG)
 
 #### Example 4
-#####  Change color palette & center number on polygons text color & change background map  
+##### Change color palette & center number on polygons text color & change background map  
+```
+valuemap(seoul, map=leaflet::providers$Stamen.Toner, palette='YlOrRd', text.color='blue')
+```
 ![](example_4.PNG)
  
