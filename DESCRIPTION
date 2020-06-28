@@ -11,7 +11,7 @@ Authors@R:
 Description: You can easily visualize your sf polygons based on "value" column.
     While Leaflet package is too raw for data analysis, 
     this package can save data analysts' efforts & time with pre-setting visualize options.
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.6.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
