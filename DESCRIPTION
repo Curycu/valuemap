@@ -1,6 +1,6 @@
 Package: valuemap
 Type: Package
-Title: Making Colored Map With sf Polygons
+Title: Making Colored Map With sf Polygons & data.frame with h3_address or korea_administrative_area_code
 Version: 0.9.0
 Authors@R:
     person(given = "Heoncheol",
@@ -8,7 +8,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "hancury@gmail.com",
            comment = c(ORCID = "0000-0001-7095-3841"))
-Description: You can easily visualize your sf polygons based on "value" column.
+Description: You can easily visualize your sf polygons and data.frame with address code based on "value" column.
     While Leaflet package is too raw for data analysis, 
     this package can save data analysts' efforts & time with pre-setting visualize options.
 Depends: R (>= 3.6.0)
@@ -22,4 +22,5 @@ Imports:
     magrittr (>= 1.5),
     sf (>= 0.9-0),
     leaflet (>= 2.0.0),
-    htmltools (>= 0.4.0)
+    htmltools (>= 0.4.0),
+    dplyr (>= 0.8.5)

@@ -79,3 +79,142 @@ valuemap <- function(data,
       addLegend(pal=pals, values=data$value, opacity=.7, title=NULL, position='bottomright')
   }
 }
+
+#' Making colored map with data.frame of h3 address
+#'
+#' This function make a Leaflet object.
+#' You can easily visualize your data.frame with "h3_addr" column based on "value" column.
+#' You have options :
+#'   background map (= map)
+#'   color legend boundary values (= legend.cut)
+#'   color palette for color legend (= palette)
+#'   showing "value" number on center of polygons (= show.text)
+#'   color for "value" number text on center of polygons (= text.color)
+#' @param data A data.frame object who has "h3_addr" & "value" columns ("value" column must be numeric type)
+#' @param map A map name of leaflet::providers
+#' @param legend.cut A numeric vector which means color legend boundary values
+#' @param palette A color name of RColorBrewer palettes
+#' @param show.text A boolean who determines showing "value" number on center of polygons
+#' @param text.color A color name for "value" number text on center of polygons
+#' @param text.format A format function for "value" number text on center of polygons
+#' @return
+#' An Leaflet object.
+#' @export
+#'
+#' @examples
+#' if (interactive()){
+#'   seoul_h3 %>%
+#'     h3_valuemap(legend.cut=1:6, show.text=FALSE)
+#' }
+h3_valuemap <- function(data,
+                        map=providers$OpenStreetMap,
+                        legend.cut=NULL,
+                        palette='Blues',
+                        show.text=TRUE,
+                        text.color='black',
+                        text.format=function(x) x){
+
+  if(!'devtools' %in% installed.packages()){
+    message('install devtools package to use devtools::install_github...')
+    rp <- c('https://cran.rstudio.com/')
+    names(rp) <- 'CRAN'
+    install.packages('devtools', repos=rp)
+  }
+
+  if(!'h3jsr' %in% installed.packages()){
+    message('install h3jsr package to make h3 polygons from h3 address...')
+    devtools::install_github('obrl-soil/h3jsr')
+  }
+
+  data %>%
+    mutate(geometry = h3jsr::h3_to_polygon(h3_addr)) %>%
+    st_as_sf %>%
+    transmute(name = h3_addr, value) %>%
+    valuemap(
+      map=map,
+      legend.cut=legend.cut,
+      palette=palette,
+      show.text=show.text,
+      text.color=text.color,
+      text.format=text.format
+    )
+}
+
+#' Making colored map with data.frame of Korea administrative area code
+#'
+#' This function make a Leaflet object.
+#' You can easily visualize your data.frame with "code" column based on "value" column.
+#' You have options :
+#'   background map (= map)
+#'   color legend boundary values (= legend.cut)
+#'   color palette for color legend (= palette)
+#'   showing "value" number on center of polygons (= show.text)
+#'   color for "value" number text on center of polygons (= text.color)
+#'   administrative area code type by digit (= code.digit)
+#' @param data A data.frame object who has "code" & "value" columns ("value" column must be numeric type)
+#' @param map A map name of leaflet::providers
+#' @param legend.cut A numeric vector which means color legend boundary values
+#' @param palette A color name of RColorBrewer palettes
+#' @param show.text A boolean who determines showing "value" number on center of polygons
+#' @param text.color A color name for "value" number text on center of polygons
+#' @param text.format A format function for "value" number text on center of polygons
+#' @param code.digit A integer meaning korea administrative area code type
+#' @return
+#' An Leaflet object.
+#' @export
+#'
+#' @examples
+#' if (interactive()){
+#'   suwon <-
+#'     korea %>%
+#'       filter(substring(hcode_7, 1, 4) == '3101') %>%
+#'       as.data.frame %>%
+#'       transmute(
+#'         code = hcode_7,
+#'         value = as.numeric(hcode_7) %% 3101 / 10)
+#'
+#'   suwon %>%
+#'     korea_valuemap(
+#'       legend.cut=c(10,20,30,40),
+#'       show.text=FALSE
+#'     )
+#' }
+korea_valuemap <- function(data,
+                           map=providers$OpenStreetMap,
+                           legend.cut=NULL,
+                           palette='Blues',
+                           show.text=TRUE,
+                           text.color='black',
+                           text.format=function(x) x,
+                           code.digit=7){
+
+  if(code.digit == 7){
+    data %>%
+      select(code, value) %>%
+      inner_join(korea, by=c('code'='hcode_7')) %>%
+      st_as_sf %>%
+      transmute(name, value) %>%
+      valuemap(
+        map=map,
+        legend.cut=legend.cut,
+        palette=palette,
+        show.text=show.text,
+        text.color=text.color,
+        text.format=text.format
+      )
+  }else{
+    data %>%
+      select(code, value) %>%
+      inner_join(korea, by=c('code'='hcode_10')) %>%
+      st_as_sf %>%
+      transmute(name, value) %>%
+      valuemap(
+        map=map,
+        legend.cut=legend.cut,
+        palette=palette,
+        show.text=show.text,
+        text.color=text.color,
+        text.format=text.format
+      )
+  }
+}
