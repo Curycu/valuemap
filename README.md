@@ -13,7 +13,7 @@ Installation
 You can install the released version of valuemap from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+if (!require('devtools')) install.packages('devtools')
 devtools::install_github("Curycu/valuemap")
 ```
 
