@@ -18,25 +18,30 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of valuemap is to save data analysts' efforts & time with pre-set sf polygon visualization.
+The goal of valuemap is to save data analysts' efforts & time with pre-set sf polygon visualization.  
+
+You can also visualize with plain data.frame based on...  
+  - H3 addresses  
+  - Republic of Korea administrative area code (digit 7, digit 10)  
 
 ## Installation
 
 You can install the released version of valuemap from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+if (!require('devtools')) install.packages('devtools')
 devtools::install_github("Curycu/valuemap")
 ```
 ## How to Use?
 
-**Your sf data must have two columns named as `name` & `value`**  
+**Your data must have two columns named as `name` & `value`**  
   - `name` column is used for mouse over popup information  
   - `value` column is used for mouse over popup information & color polygons & display center number of polygons  
   
 ```{r}
 library(valuemap)
 
+data('seoul')
 seoul
 ```
 
@@ -71,3 +76,36 @@ valuemap(
 ```
 ![](example_4.PNG)
  
+#### Example 5
+##### You can visualize based on plain data.frame with h3 addresses 
+```{r}
+data('seoul_h3')
+seoul_h3
+```
+```
+seoul_h3 %>%
+  h3_valuemap(legend.cut=1:6, show.text=FALSE)
+```
+![](example_5.PNG)
+
+#### Example 6
+##### You can visualize based on plain data.frame with Korea administrative area id codes 
+##### (digit 7 or 10 both type available)
+```{r}
+data('suwon')
+suwon
+```
+```
+suwon %>%
+  korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
+```
+![](example_6.PNG)
+
+##### you can search code <-> district name mapping with 'korea' object
+  - source : https://github.com/vuski/admdongkor
+```{r, message=FALSE}
+library(dplyr)
+
+data('korea')
+korea %>% select(hcode_7, hcode_10, name)
+```

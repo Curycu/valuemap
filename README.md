@@ -7,6 +7,10 @@ valuemap
 <!-- badges: end -->
 The goal of valuemap is to save data analysts' efforts & time with pre-set sf polygon visualization.
 
+You can also visualize with plain data.frame based on...
+- H3 addresses
+- Republic of Korea administrative area code (digit 7, digit 10)
+
 Installation
 ------------
 
@@ -20,13 +24,14 @@ devtools::install_github("Curycu/valuemap")
 How to Use?
 -----------
 
-**Your sf data must have two columns named as `name` & `value`**
+**Your data must have two columns named as `name` & `value`**
 - `name` column is used for mouse over popup information
 - `value` column is used for mouse over popup information & color polygons & display center number of polygons
 
 ``` r
 library(valuemap)
 
+data('seoul')
 seoul
 #> Simple feature collection with 25 features and 2 fields
 #> geometry type:  POLYGON
@@ -83,3 +88,133 @@ seoul
     )
 
 ![](example_4.PNG)
+
+#### Example 5
+
+##### You can visualize based on plain data.frame with h3 addresses
+
+``` r
+data('seoul_h3')
+seoul_h3
+#> # A tibble: 1,329 x 2
+#>    name            value
+#>    <chr>           <dbl>
+#>  1 8830e03449fffff     4
+#>  2 8830e03453fffff     3
+#>  3 8830e0345bfffff     3
+#>  4 8830e034c9fffff     3
+#>  5 8830e03601fffff     4
+#>  6 8830e03603fffff     4
+#>  7 8830e03605fffff     4
+#>  8 8830e03607fffff     4
+#>  9 8830e03609fffff     3
+#> 10 8830e0360bfffff     4
+#> # ... with 1,319 more rows
+```
+
+    seoul_h3 %>%
+      h3_valuemap(legend.cut=1:6, show.text=FALSE)
+
+![](example_5.PNG)
+
+#### Example 6
+
+##### You can visualize based on plain data.frame with Korea administrative area id codes
+
+##### (digit 7 or 10 both type available)
+
+``` r
+data('suwon')
+suwon
+#>       name value
+#> 1  3101154  15.4
+#> 2  3101155  15.5
+#> 3  3101156  15.6
+#> 4  3101157  15.7
+#> 5  3101158  15.8
+#> 6  3101159  15.9
+#> 7  3101160  16.0
+#> 8  3101161  16.1
+#> 9  3101162  16.2
+#> 10 3101163  16.3
+#> 11 3101252  25.2
+#> 12 3101253  25.3
+#> 13 3101254  25.4
+#> 14 3101255  25.5
+#> 15 3101256  25.6
+#> 16 3101257  25.7
+#> 17 3101266  26.6
+#> 18 3101261  26.1
+#> 19 3101262  26.2
+#> 20 3101265  26.5
+#> 21 3101264  26.4
+#> 22 3101353  35.3
+#> 23 3101354  35.4
+#> 24 3101355  35.5
+#> 25 3101356  35.6
+#> 26 3101367  36.7
+#> 27 3101368  36.8
+#> 28 3101369  36.9
+#> 29 3101370  37.0
+#> 30 3101371  37.1
+#> 31 3101372  37.2
+#> 32 3101451  45.1
+#> 33 3101452  45.2
+#> 34 3101453  45.3
+#> 35 3101454  45.4
+#> 36 3101464  46.4
+#> 37 3101465  46.5
+#> 38 3101467  46.7
+#> 39 3101460  46.0
+#> 40 3101462  46.2
+#> 41 3101463  46.3
+#> 42 3101260  26.0
+#> 43 3101466  46.6
+#> 44 3101468  46.8
+```
+
+    suwon %>%
+      korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
+
+![](example_6.PNG)
+
+##### you can search code &lt;-&gt; district name mapping with 'korea' object
+
+-   source : <https://github.com/vuski/admdongkor>
+
+``` r
+library(dplyr)
+
+data('korea')
+korea %>% select(hcode_7, hcode_10, name)
+#> Simple feature collection with 3487 features and 3 fields
+#> geometry type:  MULTIPOLYGON
+#> dimension:      XY
+#> bbox:           xmin: 124.6097 ymin: 33.11187 xmax: 131.8713 ymax: 38.61695
+#> z_range:        zmin: 0 zmax: 0
+#> m_range:        mmin: 0 mmax: 0
+#> geographic CRS: WGS 84
+#> First 10 features:
+#>    hcode_7   hcode_10                                 name
+#> 1  1101053 1111053000             서울특별시 종로구 사직동
+#> 2  1101054 1111054000             서울특별시 종로구 삼청동
+#> 3  1101055 1111055000             서울특별시 종로구 부암동
+#> 4  1101056 1111056000             서울특별시 종로구 평창동
+#> 5  1101057 1111057000             서울특별시 종로구 무악동
+#> 6  1101058 1111058000             서울특별시 종로구 교남동
+#> 7  1101060 1111060000             서울특별시 종로구 가회동
+#> 8  1101061 1111061500 서울특별시 종로구 종로1·2·3·4가동
+#> 9  1101063 1111063000       서울특별시 종로구 종로5·6가동
+#> 10 1101064 1111064000             서울특별시 종로구 이화동
+#>                          geometry
+#> 1  MULTIPOLYGON (((126.9769 37...
+#> 2  MULTIPOLYGON (((126.9827 37...
+#> 3  MULTIPOLYGON (((126.9759 37...
+#> 4  MULTIPOLYGON (((126.9751 37...
+#> 5  MULTIPOLYGON (((126.9607 37...
+#> 6  MULTIPOLYGON (((126.969 37....
+#> 7  MULTIPOLYGON (((126.9891 37...
+#> 8  MULTIPOLYGON (((126.9965 37...
+#> 9  MULTIPOLYGON (((127.0102 37...
+#> 10 MULTIPOLYGON (((127.0073 37...
+```

@@ -33,7 +33,7 @@
 #'
 #' @format A data.frame with 1329 rows and 2 variables:
 #' \describe{
-#'   \item{h3_addr}{h3 resolution 8 address}
+#'   \item{name}{h3 resolution 8 address}
 #'   \item{value}{meaningless number}
 #'   ...
 #' }
@@ -46,7 +46,7 @@
 #'
 #' @format A sf with 44 rows and 2 variables:
 #' \describe{
-#'   \item{code}{id codes with 7 digit number of administration area}
+#'   \item{name}{id codes with 7 digit number of administration area}
 #'   \item{value}{district number}
 #'   ...
 #' }

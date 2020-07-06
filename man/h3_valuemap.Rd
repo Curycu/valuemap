@@ -34,7 +34,7 @@ An Leaflet object.
 }
 \description{
 This function make a Leaflet object.
-You can easily visualize your data.frame with "h3_addr" column based on "value" column.
+You can easily visualize your data.frame with h3 address "name" column based on "value" column.
 You have options :
   background map (= map)
   color legend boundary values (= legend.cut)

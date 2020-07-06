@@ -7,7 +7,7 @@
 \format{
 A sf with 44 rows and 2 variables:
 \describe{
-  \item{code}{id codes with 7 digit number of administration area}
+  \item{name}{id codes with 7 digit number of administration area}
   \item{value}{district number}
   ...
 }

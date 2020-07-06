@@ -37,7 +37,7 @@ An Leaflet object.
 }
 \description{
 This function make a Leaflet object.
-You can easily visualize your data.frame with "code" column based on "value" column.
+You can easily visualize your data.frame with administrative area code "name" column based on "value" column.
 You have options :
   background map (= map)
   color legend boundary values (= legend.cut)
@@ -48,18 +48,7 @@ You have options :
 }
 \examples{
 if (interactive()){
-  suwon <-
-    korea \%>\%
-      filter(substring(hcode_7, 1, 4) == '3101') \%>\%
-      as.data.frame \%>\%
-      transmute(
-        code = hcode_7,
-        value = as.numeric(hcode_7) \%\% 3101 / 10)
-
   suwon \%>\%
-    korea_valuemap(
-      legend.cut=c(10,20,30,40),
-      show.text=FALSE
-    )
+    korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
 }
 }

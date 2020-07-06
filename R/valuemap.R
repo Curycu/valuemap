@@ -83,7 +83,7 @@ valuemap <- function(data,
 #' Making colored map with data.frame of h3 address
 #'
 #' This function make a Leaflet object.
-#' You can easily visualize your data.frame with "h3_addr" column based on "value" column.
+#' You can easily visualize your data.frame with h3 address "name" column based on "value" column.
 #' You have options :
 #'   background map (= map)
 #'   color legend boundary values (= legend.cut)
@@ -127,9 +127,9 @@ h3_valuemap <- function(data,
   }
 
   data %>%
-    mutate(geometry = h3jsr::h3_to_polygon(h3_addr)) %>%
+    mutate(geometry = h3jsr::h3_to_polygon(name)) %>%
     st_as_sf %>%
-    transmute(name = h3_addr, value) %>%
+    select(name, value) %>%
     valuemap(
       map=map,
       legend.cut=legend.cut,
@@ -143,7 +143,7 @@ h3_valuemap <- function(data,
 #' Making colored map with data.frame of Korea administrative area code
 #'
 #' This function make a Leaflet object.
-#' You can easily visualize your data.frame with "code" column based on "value" column.
+#' You can easily visualize your data.frame with administrative area code "name" column based on "value" column.
 #' You have options :
 #'   background map (= map)
 #'   color legend boundary values (= legend.cut)
@@ -165,19 +165,8 @@ h3_valuemap <- function(data,
 #'
 #' @examples
 #' if (interactive()){
-#'   suwon <-
-#'     korea %>%
-#'       filter(substring(hcode_7, 1, 4) == '3101') %>%
-#'       as.data.frame %>%
-#'       transmute(
-#'         code = hcode_7,
-#'         value = as.numeric(hcode_7) %% 3101 / 10)
-#'
 #'   suwon %>%
-#'     korea_valuemap(
-#'       legend.cut=c(10,20,30,40),
-#'       show.text=FALSE
-#'     )
+#'     korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
 #' }
 korea_valuemap <- function(data,
                            map=providers$OpenStreetMap,
@@ -190,10 +179,10 @@ korea_valuemap <- function(data,
 
   if(code.digit == 7){
     data %>%
-      select(code, value) %>%
-      inner_join(korea, by=c('code'='hcode_7')) %>%
+      select(name, value) %>%
+      inner_join(korea, by=c('name'='hcode_7')) %>%
       st_as_sf %>%
-      transmute(name, value) %>%
+      select(name, value) %>%
       valuemap(
         map=map,
         legend.cut=legend.cut,
@@ -204,10 +193,10 @@ korea_valuemap <- function(data,
       )
   }else{
     data %>%
-      select(code, value) %>%
-      inner_join(korea, by=c('code'='hcode_10')) %>%
+      select(name, value) %>%
+      inner_join(korea, by=c('name'='hcode_10')) %>%
       st_as_sf %>%
-      transmute(name, value) %>%
+      select(name, value) %>%
       valuemap(
         map=map,
         legend.cut=legend.cut,

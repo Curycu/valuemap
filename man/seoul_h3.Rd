@@ -7,7 +7,7 @@
 \format{
 A data.frame with 1329 rows and 2 variables:
 \describe{
-  \item{h3_addr}{h3 resolution 8 address}
+  \item{name}{h3 resolution 8 address}
   \item{value}{meaningless number}
   ...
 }
