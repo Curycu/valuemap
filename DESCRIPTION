@@ -23,5 +23,5 @@ Imports:
     leaflet (>= 2.0.0),
     htmltools (>= 0.4.0),
     dplyr (>= 0.8.3),
-    devtools (>= 2.3.0),
+    devtools (>= 2.2.0),
     utils
