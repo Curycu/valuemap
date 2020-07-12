@@ -36,7 +36,7 @@
 #'     text.color='blue', text.format=function(x) paste(x,'EA')
 #'   )
 valuemap <- function(data,
-                     map=providers$OpenStreetMap,
+                     map=leaflet::providers$OpenStreetMap,
                      legend.cut=NULL,
                      palette='Blues',
                      show.text=TRUE,
@@ -45,38 +45,38 @@ valuemap <- function(data,
 
   # label & highlight setting
   popup.labels <- sprintf('<strong>%s</strong><br/>value: %s', data$name, text.format(data$value)) %>% lapply(htmltools::HTML)
-  popup.label.options <- labelOptions(style=list(padding='3px 8px'), textsize='15px')
-  highlight.options <- highlightOptions(weight=5, color='white', dashArray='', fillOpacity=.7, bringToFront=TRUE)
+  popup.label.options <- leaflet::labelOptions(style=list(padding='3px 8px'), textsize='15px')
+  highlight.options <- leaflet::highlightOptions(weight=5, color='white', dashArray='', fillOpacity=.7, bringToFront=TRUE)
 
   # color setting
   bins <- if(is.null(legend.cut)) data$value %>% summary %>% unclass %>% unique else c(-Inf, legend.cut, Inf)
-  pals <- colorBin(palette, domain=data$value, bins=bins)
+  pals <- leaflet::colorBin(palette, domain=data$value, bins=bins)
 
   # base plot
-  base.map <- leaflet(data) %>% addProviderTiles(provider=map)
+  base.map <- leaflet::leaflet(data) %>% leaflet::addProviderTiles(provider=map)
 
   # plot detail
   if(show.text){
-    centers <- suppressWarnings(st_centroid(data))
+    centers <- suppressWarnings(sf::st_centroid(data))
     labels <- sprintf('<strong>%s</strong>', text.format(data$value)) %>% lapply(htmltools::HTML)
-    label.options <- labelOptions(noHide=TRUE, direction='center', textOnly=TRUE, textsize='12px', style=list(color=text.color))
+    label.options <- leaflet::labelOptions(noHide=TRUE, direction='center', textOnly=TRUE, textsize='12px', style=list(color=text.color))
 
     base.map %>%
-      addPolygons(
+      leaflet::addPolygons(
         color='white', weight=2, opacity=1, dashArray=3,
         fillColor=~pals(value), fillOpacity=.7, highlightOptions=highlight.options,
         label=popup.labels, labelOptions=popup.label.options
       ) %>%
-      addLabelOnlyMarkers(data=centers, label=labels, labelOptions=label.options) %>%
-      addLegend(pal=pals, values=data$value, opacity=.7, title=NULL, position='bottomright')
+      leaflet::addLabelOnlyMarkers(data=centers, label=labels, labelOptions=label.options) %>%
+      leaflet::addLegend(pal=pals, values=data$value, opacity=.7, title=NULL, position='bottomright')
   }else{
     base.map %>%
-      addPolygons(
+      leaflet::addPolygons(
         color='white', weight=2, opacity=1, dashArray=3,
         fillColor=~pals(value), fillOpacity=.7, highlightOptions=highlight.options,
         label=popup.labels, labelOptions=popup.label.options
       ) %>%
-      addLegend(pal=pals, values=data$value, opacity=.7, title=NULL, position='bottomright')
+      leaflet::addLegend(pal=pals, values=data$value, opacity=.7, title=NULL, position='bottomright')
   }
 }
 
@@ -127,9 +127,9 @@ h3_valuemap <- function(data,
   }
 
   data %>%
-    mutate(geometry = h3jsr::h3_to_polygon(name)) %>%
-    st_as_sf %>%
-    select(name, value) %>%
+    dplyr::mutate(geometry = h3jsr::h3_to_polygon(data$name)) %>%
+    sf::st_as_sf %>%
+    dplyr::select(data$name, data$value) %>%
     valuemap(
       map=map,
       legend.cut=legend.cut,
@@ -179,10 +179,10 @@ korea_valuemap <- function(data,
 
   if(code.digit == 7){
     data %>%
-      select(name, value) %>%
-      inner_join(korea, by=c('name'='hcode_7')) %>%
-      st_as_sf %>%
-      select(name, value) %>%
+      dplyr::select(data$name, data$value) %>%
+      dplyr::inner_join(valuemap::korea, by=c('name'='hcode_7')) %>%
+      sf::st_as_sf %>%
+      dplyr::select(data$name, data$value) %>%
       valuemap(
         map=map,
         legend.cut=legend.cut,
@@ -193,10 +193,10 @@ korea_valuemap <- function(data,
       )
   }else{
     data %>%
-      select(name, value) %>%
-      inner_join(korea, by=c('name'='hcode_10')) %>%
-      st_as_sf %>%
-      select(name, value) %>%
+      dplyr::select(data$name, data$value) %>%
+      dplyr::inner_join(valuemap::korea, by=c('name'='hcode_10')) %>%
+      sf::st_as_sf %>%
+      dplyr::select(data$name, data$value) %>%
       valuemap(
         map=map,
         legend.cut=legend.cut,

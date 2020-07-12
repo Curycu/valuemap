@@ -6,7 +6,7 @@
 \usage{
 valuemap(
   data,
-  map = providers$OpenStreetMap,
+  map = leaflet::providers$OpenStreetMap,
   legend.cut = NULL,
   palette = "Blues",
   show.text = TRUE,
