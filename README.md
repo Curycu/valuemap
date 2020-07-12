@@ -40,10 +40,10 @@ seoul
 #> geometry type:  POLYGON
 #> dimension:      XY
 #> bbox:           xmin: 126.7643 ymin: 37.42901 xmax: 127.1836 ymax: 37.70108
-#> CRS:            EPSG:4326
+#> CRS:            +proj=longlat +datum=WGS84 +no_defs
 #> # A tibble: 25 x 3
 #>    name  value                                                     geometry
-#>    <chr> <int>                                                <POLYGON [m]>
+#>    <chr> <int>                                                <POLYGON [°]>
 #>  1 1111     17 ((126.969 37.56819, 126.968 37.56718, 126.9679 37.5671, 126…
 #>  2 1114     15 ((127.0163 37.55301, 127.0132 37.54994, 127.0117 37.54851, …
 #>  3 1117     16 ((126.9825 37.51351, 126.9801 37.51212, 126.9756 37.5123, 1…
@@ -115,8 +115,7 @@ seoul_h3
 #> # … with 1,319 more rows
 ```
 
-    seoul_h3 %>%
-      h3_valuemap(legend.cut=1:6, show.text=FALSE)
+    h3_valuemap(seoul_h3, legend.cut=1:6, show.text=FALSE)
 
 ![](example_5.PNG)
 
@@ -176,8 +175,7 @@ suwon
 #> 44 3101468  46.8
 ```
 
-    suwon %>%
-      korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
+    korea_valuemap(suwon, legend.cut=c(10,20,30,40), show.text=FALSE)
 
 ![](example_6.PNG)
 

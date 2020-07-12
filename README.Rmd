@@ -83,8 +83,7 @@ data('seoul_h3')
 seoul_h3
 ```
 ```
-seoul_h3 %>%
-  h3_valuemap(legend.cut=1:6, show.text=FALSE)
+h3_valuemap(seoul_h3, legend.cut=1:6, show.text=FALSE)
 ```
 ![](example_5.PNG)
 
@@ -96,8 +95,7 @@ data('suwon')
 suwon
 ```
 ```
-suwon %>%
-  korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
+korea_valuemap(suwon, legend.cut=c(10,20,30,40), show.text=FALSE)
 ```
 ![](example_6.PNG)
 
