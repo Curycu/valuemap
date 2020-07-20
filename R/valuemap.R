@@ -49,8 +49,10 @@ valuemap <- function(data,
   highlight.options <- highlightOptions(weight=5, color='white', dashArray='', fillOpacity=.7, bringToFront=TRUE)
 
   # color setting
-  bins <- if(is.null(data) | nrow(data) == 0){
-    stop('error : is.null(data) | nrow(data) == 0')
+  bins <- if(is.null(data)){
+    stop('is.null(data) == TRUE')
+  }else if(nrow(data) == 0){
+    stop('nrow(data) == 0')
   }else if(is.null(legend.cut) & nrow(data) == 1) {
     data$value
   }else if(is.null(legend.cut) & nrow(data) > 1){
