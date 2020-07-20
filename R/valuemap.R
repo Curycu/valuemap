@@ -49,7 +49,16 @@ valuemap <- function(data,
   highlight.options <- highlightOptions(weight=5, color='white', dashArray='', fillOpacity=.7, bringToFront=TRUE)
 
   # color setting
-  bins <- if(is.null(legend.cut)) data$value %>% summary %>% unclass %>% unique else c(-Inf, legend.cut, Inf)
+  bins <- if(is.null(data) | nrow(data) == 0){
+    stop('error : is.null(data) | nrow(data) == 0')
+  }else if(is.null(legend.cut) & nrow(data) == 1) {
+    data$value
+  }else if(is.null(legend.cut) & nrow(data) > 1){
+    data$value %>% summary %>% unclass %>% unique
+  }else{
+    c(-Inf, legend.cut, Inf)
+  }
+
   pals <- colorBin(palette, domain=data$value, bins=bins)
 
   # base plot
