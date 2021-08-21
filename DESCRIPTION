@@ -25,6 +25,7 @@ Imports:
     htmltools (>= 0.4.0),
     dplyr (>= 0.8.3),
     devtools (>= 2.2.0),
-    utils
+    utils,
+    h3jsr
 Remotes:
     github::obrl-soil/h3jsr
