@@ -1,6 +1,6 @@
-#' Making colored map with sf polygons
+#' Making choropleth map with sf polygons
 #'
-#' This function make a Leaflet object.
+#' This function make a leaflet object.
 #' You can easily visualize your sf polygons based on "value" column.
 #' You have options :
 #'   background map (= map)
@@ -16,7 +16,7 @@
 #' @param text.color A color name for "value" number text on center of polygons
 #' @param text.format A format function for "value" number text on center of polygons
 #' @return
-#' An Leaflet object.
+#' A leaflet object.
 #' @export
 #'
 #' @examples
@@ -91,9 +91,9 @@ valuemap <- function(data,
   }
 }
 
-#' Making colored map with data.frame of h3 address
+#' Making choropleth map with data.frame of h3 address
 #'
-#' This function make a Leaflet object.
+#' This function make a leaflet object.
 #' You can easily visualize your data.frame with h3 address "name" column based on "value" column.
 #' You have options :
 #'   background map (= map)
@@ -109,15 +109,15 @@ valuemap <- function(data,
 #' @param text.color A color name for "value" number text on center of polygons
 #' @param text.format A format function for "value" number text on center of polygons
 #' @return
-#' An Leaflet object.
+#' A leaflet object.
 #' @export
 #'
 #' @examples
 #' if (interactive()){
 #'   seoul_h3 %>%
-#'     h3_valuemap(legend.cut=1:6, show.text=FALSE)
+#'     valuemap_h3(legend.cut=1:6, show.text=FALSE)
 #' }
-h3_valuemap <- function(data,
+valuemap_h3 <- function(data,
                         map=providers$OpenStreetMap,
                         legend.cut=NULL,
                         palette='Blues',
@@ -125,96 +125,18 @@ h3_valuemap <- function(data,
                         text.color='black',
                         text.format=function(x) x){
 
-  if(!'devtools' %in% installed.packages()){
-    message('install devtools package to use devtools::install_github...')
-    rp <- c('https://cran.rstudio.com/')
-    names(rp) <- 'CRAN'
-    install.packages('devtools', repos=rp)
-  }
-
-  if(!'h3jsr' %in% installed.packages()){
-    message('install h3jsr package to make h3 polygons from h3 address...')
-    install_github('obrl-soil/h3jsr')
-  }
-
-  data %>%
-    mutate(geometry = h3jsr::h3_to_polygon(name)) %>%
-    st_as_sf %>%
-    select(name, value) %>%
-    valuemap(
-      map=map,
-      legend.cut=legend.cut,
-      palette=palette,
-      show.text=show.text,
-      text.color=text.color,
-      text.format=text.format
-    )
-}
-
-#' Making colored map with data.frame of Korea administrative area code
-#'
-#' This function make a Leaflet object.
-#' You can easily visualize your data.frame with administrative area code "name" column based on "value" column.
-#' You have options :
-#'   background map (= map)
-#'   color legend boundary values (= legend.cut)
-#'   color palette for color legend (= palette)
-#'   showing "value" number on center of polygons (= show.text)
-#'   color for "value" number text on center of polygons (= text.color)
-#'   administrative area code type by digit (= code.digit)
-#' @param data A data.frame object who has "code" & "value" columns ("value" column must be numeric type)
-#' @param map A map name of leaflet::providers
-#' @param legend.cut A numeric vector which means color legend boundary values
-#' @param palette A color name of RColorBrewer palettes
-#' @param show.text A boolean who determines showing "value" number on center of polygons
-#' @param text.color A color name for "value" number text on center of polygons
-#' @param text.format A format function for "value" number text on center of polygons
-#' @param code.digit A integer meaning korea administrative area code type
-#' @return
-#' An Leaflet object.
-#' @export
-#'
-#' @examples
-#' if (interactive()){
-#'   suwon %>%
-#'     korea_valuemap(legend.cut=c(10,20,30,40), show.text=FALSE)
-#' }
-korea_valuemap <- function(data,
-                           map=providers$OpenStreetMap,
-                           legend.cut=NULL,
-                           palette='Blues',
-                           show.text=TRUE,
-                           text.color='black',
-                           text.format=function(x) x,
-                           code.digit=7){
-
-  if(code.digit == 7){
+  sf_data <-
     data %>%
-      select(name, value) %>%
-      inner_join(korea, by=c('name'='hcode_7')) %>%
-      st_as_sf %>%
-      select(name, value) %>%
-      valuemap(
-        map=map,
-        legend.cut=legend.cut,
-        palette=palette,
-        show.text=show.text,
-        text.color=text.color,
-        text.format=text.format
-      )
-  }else{
-    data %>%
-      select(name, value) %>%
-      inner_join(korea, by=c('name'='hcode_10')) %>%
-      st_as_sf %>%
-      select(name, value) %>%
-      valuemap(
-        map=map,
-        legend.cut=legend.cut,
-        palette=palette,
-        show.text=show.text,
-        text.color=text.color,
-        text.format=text.format
-      )
-  }
+    mutate(geometry = h3jsr::h3_to_polygon(data$name)) %>%
+    st_as_sf
+
+  valuemap(
+    sf_data,
+    map=map,
+    legend.cut=legend.cut,
+    palette=palette,
+    show.text=show.text,
+    text.color=text.color,
+    text.format=text.format
+  )
 }

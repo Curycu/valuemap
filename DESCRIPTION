@@ -1,21 +1,22 @@
 Package: valuemap
 Type: Package
-Title: Making Colored Map With sf Polygons & data.frame with h3_address or korea_administrative_area_code
-Version: 1.0.2
+Title: Making Choropleth Map
+Version: 2.0.0
 Authors@R:
     person(given = "Heoncheol",
            family = "Ha",
            role = c("aut", "cre"),
            email = "hancury@gmail.com",
            comment = c(ORCID = "0000-0001-7095-3841"))
-Description: You can easily visualize your sf polygons and data.frame with address code based on "value" column.
-    While Leaflet package is too raw for data analysis, 
+Description: 
+    You can easily visualize your 'sf' polygons or data.frame with h3 address.
+    While 'leaflet' package is too raw for data analysis, 
     this package can save data analysts' efforts & time with pre-setting visualize options.
 Depends: R (>= 3.6.0)
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 URL: https://github.com/Curycu/valuemap
 BugReports: https://github.com/Curycu/valuemap/issues
 Imports:
@@ -25,3 +26,5 @@ Imports:
     dplyr (>= 0.8.3),
     devtools (>= 2.2.0),
     utils
+Remotes:
+    github::obrl-soil/h3jsr

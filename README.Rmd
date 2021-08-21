@@ -28,7 +28,7 @@ You can also visualize with plain data.frame based on...
 
 You can install the released version of valuemap from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval = FALSE}
 if(!require('devtools')) install.packages('devtools')
 devtools::install_github("Curycu/valuemap")
 ```
@@ -47,28 +47,28 @@ seoul
 
 #### Example 1
 ##### Quick & easy visualization of sf polygons with value  
-```
+```{r, eval = FALSE}
 valuemap(seoul)
 ```
 ![](example_1.PNG)
 
 #### Example 2
 ##### Emphasize greater or equal to 20 polygons (>= 20, < 20 : two level only)  
-```
+```{r, eval = FALSE}
 valuemap(seoul, legend.cut=c(20))
 ```
 ![](example_2.PNG)
 
 #### Example 3
 ##### Visualize without center number on polygons  
-```
+```{r, eval = FALSE}
 valuemap(seoul, legend.cut=c(15,17,20), show.text=FALSE)
 ```
 ![](example_3.PNG)
 
 #### Example 4
 ##### Change color palette & center number on polygons text color, format & change background map  
-```
+```{r, eval = FALSE}
 valuemap(
   seoul, map=leaflet::providers$Stamen.Toner, palette='YlOrRd',
   text.color='blue', text.format=function(x) paste(x,'EA')
@@ -82,28 +82,7 @@ valuemap(
 data('seoul_h3')
 seoul_h3
 ```
-```
-h3_valuemap(seoul_h3, legend.cut=1:6, show.text=FALSE)
+```{r, eval = FALSE}
+valuemap_h3(seoul_h3, legend.cut=1:6, show.text=FALSE)
 ```
 ![](example_5.PNG)
-
-#### Example 6
-##### You can visualize based on plain data.frame with Korea administrative area id codes 
-##### (digit 7 or 10 both type available)
-```{r}
-data('suwon')
-suwon
-```
-```
-korea_valuemap(suwon, legend.cut=c(10,20,30,40), show.text=FALSE)
-```
-![](example_6.PNG)
-
-##### you can search code <-> district name mapping with 'korea' object
-  - source : https://github.com/vuski/admdongkor
-```{r, message=FALSE}
-library(dplyr)
-
-data('korea')
-korea %>% select(hcode_7, hcode_10, name)
-```

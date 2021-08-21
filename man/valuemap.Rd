@@ -2,7 +2,7 @@
 % Please edit documentation in R/valuemap.R
 \name{valuemap}
 \alias{valuemap}
-\title{Making colored map with sf polygons}
+\title{Making choropleth map with sf polygons}
 \usage{
 valuemap(
   data,
@@ -30,10 +30,10 @@ valuemap(
 \item{text.format}{A format function for "value" number text on center of polygons}
 }
 \value{
-An Leaflet object.
+A leaflet object.
 }
 \description{
-This function make a Leaflet object.
+This function make a leaflet object.
 You can easily visualize your sf polygons based on "value" column.
 You have options :
   background map (= map)
