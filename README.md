@@ -5,14 +5,13 @@
 
 <!-- badges: start -->
 
+[![CRAN](https://www.r-pkg.org/badges/version/valuemap)](https://cran.r-project.org/package=valuemap)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/valuemap)](https://www.r-pkg.org/pkg/valuemap)
 <!-- badges: end -->
 
 The goal of valuemap is to save data analysts’ efforts & time with
-pre-set sf polygon visualization.
-
-You can also visualize with plain data.frame based on…  
-\- H3 addresses  
-\- Republic of Korea administrative area code (digit 7, digit 10)
+pre-set sf polygon visualization.  
+You can also visualize with plain data.frame based on H3 addresses
 
 ## Installation
 
