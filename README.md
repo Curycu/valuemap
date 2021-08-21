@@ -101,7 +101,7 @@ valuemap(
 
 #### Example 5
 
-##### You can visualize based on plain data.frame with h3 addresses
+##### You can visualize based on plain data.frame with h3 address
 
 ``` r
 data('seoul_h3')
