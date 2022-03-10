@@ -23,14 +23,21 @@ knitr::opts_chunk$set(
 The goal of valuemap is to save data analysts' efforts & time with pre-set sf polygon visualization.  
 You can also visualize with plain data.frame based on H3 addresses  
 
-## Installation
+## Installation  
 
-You can install the released version of valuemap from [GitHub](https://github.com/) with:
+To install the stable version from CRAN, simply run the following from an R console:
 
 ```{r, eval = FALSE}
-if(!require('devtools')) install.packages('devtools')
-devtools::install_github("Curycu/valuemap")
+install.packages('valuemap')
 ```
+
+To install the latest development builds directly from GitHub, run this instead:
+
+```{r, eval = FALSE}
+if (!require('devtools')) install.packages('devtools')
+devtools::install_github('Curycu/valuemap')
+```
+
 ## How to Use?
 
 **Your data must have two columns named as `name` & `value`**  
