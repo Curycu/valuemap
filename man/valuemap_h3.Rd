@@ -44,7 +44,6 @@ You have options :
 }
 \examples{
 if (interactive()){
-  seoul_h3 \%>\%
-    valuemap_h3(legend.cut=1:6, show.text=FALSE)
+  valuemap_h3(seoul_h3, legend.cut=1:6, show.text=FALSE)
 }
 }
