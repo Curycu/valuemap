@@ -127,7 +127,7 @@ valuemap_h3 <- function(data,
 
   sf_data <-
     data %>%
-    mutate(geometry = h3jsr::h3_to_polygon(data$name)) %>%
+    mutate(geometry = h3jsr::cell_to_polygon(data$name)) %>%
     st_as_sf
 
   valuemap(
