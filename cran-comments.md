@@ -6,6 +6,6 @@ There were no ERRORs or WARNINGs.
 
 ```
 -- R CMD check results --
-Duration: 53.1s
+Duration: 59s
 0 errors √ | 0 warnings √ | 0 notes √
 ```
