@@ -26,8 +26,8 @@ To install the latest development builds directly from GitHub, run this
 instead:
 
 ``` r
-if (!require('devtools')) install.packages('devtools')
-devtools::install_github('Curycu/valuemap')
+if (!require('remotes')) install.packages('remotes')
+remotes::install_github('Curycu/valuemap')
 ```
 
 ## How to Use?
@@ -75,7 +75,7 @@ valuemap(seoul)
 
 #### Example 2
 
-##### Emphasize greater or equal to 20 polygons (&gt;= 20, &lt; 20 : two level only)
+##### Emphasize greater or equal to 20 polygons (\>= 20, \< 20 : two level only)
 
 ``` r
 valuemap(seoul, legend.cut=c(20))
