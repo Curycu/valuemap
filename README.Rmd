@@ -34,8 +34,8 @@ install.packages('valuemap')
 To install the latest development builds directly from GitHub, run this instead:
 
 ```{r, eval = FALSE}
-if (!require('devtools')) install.packages('devtools')
-devtools::install_github('Curycu/valuemap')
+if (!require('remotes')) install.packages('remotes')
+remotes::install_github('Curycu/valuemap')
 ```
 
 ## How to Use?
